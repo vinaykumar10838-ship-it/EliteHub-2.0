@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EliteHub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;}
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+}
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle at top,#0f172a,#020617);
+  font-family:Segoe UI,Arial,sans-serif;
+  color:#fff;
+}
+.card{
+  width:90%;
+  max-width:360px;
+  background:#0b1228;
+  border-radius:22px;
+  padding:28px 20px;
+  text-align:center;
+  box-shadow:0 25px 80px rgba(0,0,0,.7);
+}
+.logo{
+  width:120px;
+  height:120px;
+  margin:0 auto 10px;
+  border-radius:50%;
+  background:url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg")
+  center/cover no-repeat;
+  box-shadow:0 0 35px #38bdf8;
+}
+h1{margin:10px 0 5px;}
+p{opacity:.85;}
+.count{
+  font-size:42px;
+  font-weight:bold;
+  color:#38bdf8;
+  margin:14px 0;
+}
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  color:#020617;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+  opacity:.4;
+}
+button.active{opacity:1;}
+.user{margin-top:12px;opacity:.7;}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="logo"></div>
+  <h1>EliteHub</h1>
+  <p>Preparing your Telegram link</p>
+  <div class="count" id="count">3</div>
+
+  <button id="btn" disabled>Join Telegram</button>
+  <div class="user">@EliteExclusiveX</div>
+</div>
+
+<script>
+let t=3;
+const c=document.getElementById("count");
+const b=document.getElementById("btn");
+
+const timer=setInterval(()=>{
+  t--;
+  c.innerText=t;
+  if(t<=0){
+    clearInterval(timer);
+    c.innerText="Ready!";
+    b.disabled=false;
+    b.classList.add("active");
+  }
+},1000);
+
+b.onclick=()=>{
+  window.location.href="https://t.me/EliteExclusiveX";
+};
+</script>
+
+</body>
+  </html>
