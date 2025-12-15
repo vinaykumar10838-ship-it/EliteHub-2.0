@@ -13,26 +13,22 @@
 :root{
   --bg:#040b18;
   --card:#0b203b;
-  --blue:#18b6ff;
-  --green:#35ffb2;
+  --blue:#19b9ff;
+  --green:#38ffb6;
+  --red:#ff6b6b;
   --text:#eaf7ff;
 }
-
 *{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
 
 body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  margin:0;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
   background:linear-gradient(135deg,#040b18,#071a2f,#040b18);
   color:var(--text);
 }
 
 .card{
-  width:94%;
-  max-width:420px;
+  width:94%;max-width:420px;
   background:var(--card);
   border-radius:30px;
   padding:28px 22px 32px;
@@ -41,39 +37,25 @@ body{
 }
 
 .logo{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  margin:auto;
-  background:#000;
-  overflow:hidden;
-  box-shadow:0 0 45px rgba(24,182,255,.9);
+  width:110px;height:110px;border-radius:50%;
+  margin:auto;background:#000;overflow:hidden;
+  box-shadow:0 0 45px rgba(25,185,255,.9);
 }
 .logo img{width:100%;height:100%;object-fit:cover}
 
 .brand{
   margin-top:16px;
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:.5px;
-  text-shadow:0 0 20px rgba(24,182,255,.8);
+  font-size:30px;font-weight:900;
+  text-shadow:0 0 20px rgba(25,185,255,.8);
 }
-
-.subtitle{
-  font-size:14px;
-  color:#9edfff;
-  margin-top:4px;
-}
+.subtitle{font-size:14px;color:#9edfff;margin-top:4px}
 
 .status{
   margin:18px 0 6px;
-  font-size:15px;
-  color:#c6f4ff;
+  font-size:15px;color:#c6f4ff;
 }
-
 .timer{
-  font-size:22px;
-  font-weight:800;
+  font-size:22px;font-weight:800;
   color:var(--green);
   margin-bottom:18px;
 }
@@ -82,70 +64,47 @@ body{
   background:#06152c;
   border:1px solid #123c6b;
   border-radius:18px;
-  padding:16px;
-  margin-bottom:18px;
+  padding:16px;margin-bottom:18px;
 }
 
-.label{
-  font-size:12px;
-  color:#9fdcff;
-  letter-spacing:.6px;
-}
-
-.value{
-  margin-top:6px;
-  font-size:16px;
-  font-weight:700;
-  word-break:break-all;
-}
+.label{font-size:12px;color:#9fdcff;letter-spacing:.6px}
+.value{margin-top:6px;font-size:16px;font-weight:700}
 
 .btn{
-  margin-top:12px;
-  width:100%;
-  border-radius:14px;
-  border:none;
-  padding:12px;
-  font-size:15px;
-  font-weight:800;
+  margin-top:12px;width:100%;
+  border-radius:14px;border:none;
+  padding:12px;font-size:15px;font-weight:800;
   cursor:pointer;
 }
-
-.btn-email{
-  background:linear-gradient(180deg,#1bbcff,#0d8fcf);
-  color:#001018;
-}
-
-.btn-pass{
-  background:linear-gradient(180deg,#44ffb8,#1fd79a);
-  color:#002018;
-}
+.btn-email{background:linear-gradient(180deg,#1bbcff,#0d8fcf);color:#001018}
+.btn-pass{background:linear-gradient(180deg,#44ffb8,#1fd79a);color:#002018}
 
 .warning{
   margin-top:12px;
-  font-size:13px;
-  font-weight:700;
-  color:#ff6b6b;
+  font-size:13px;font-weight:700;
+  color:var(--red);
+}
+
+.validity{
+  margin-top:14px;
+  font-size:15px;
+  font-weight:800;
+  color:var(--green);
+  text-shadow:0 0 14px rgba(56,255,182,.7);
 }
 
 .footer{
-  margin-top:14px;
-  font-size:12px;
-  color:#9edfff;
+  margin-top:10px;
+  font-size:12px;color:#9edfff;
 }
 
 .toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
+  position:fixed;bottom:20px;left:50%;
   transform:translateX(-50%);
-  background:#000;
-  color:#00ffb2;
-  padding:10px 18px;
-  border-radius:20px;
-  font-size:14px;
-  font-weight:700;
-  opacity:0;
-  transition:.3s;
+  background:#000;color:#00ffb2;
+  padding:10px 18px;border-radius:20px;
+  font-size:14px;font-weight:700;
+  opacity:0;transition:.3s;
 }
 .toast.show{opacity:1}
 </style>
@@ -154,7 +113,6 @@ body{
 <body>
 
 <div class="card">
-
   <div class="logo">
     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg">
   </div>
@@ -162,8 +120,10 @@ body{
   <div class="brand">EliteHub</div>
   <div class="subtitle">Secure Key Access</div>
 
-  <div class="status">Generating secure access key…</div>
-  <div class="timer"><span id="time">3</span>s</div>
+  <div id="gen">
+    <div class="status">Generating secure access key…</div>
+    <div class="timer"><span id="genTime">3</span>s</div>
+  </div>
 
   <div class="panel">
     <div class="label">EMAIL</div>
@@ -181,8 +141,9 @@ body{
     </div>
   </div>
 
+  <div class="validity" id="validity"></div>
+
   <div class="footer">
-    ⏳ Key valid for 24 Hours<br>
     EliteHub Trusted Access • Secure • Verified
   </div>
 </div>
@@ -203,32 +164,55 @@ const data=[
  {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-const now=Date.now();
-const saved=JSON.parse(localStorage.getItem('elitehub_session')||'{}');
-let idx;
+const NOW = Date.now();
+let session = JSON.parse(localStorage.getItem('elitehub_session')||'{}');
+let idx, expire;
 
-if(!saved.time||now-saved.time>86400000){
- idx=Math.floor(Math.random()*data.length);
- localStorage.setItem('elitehub_session',JSON.stringify({idx,time:now}));
-}else idx=saved.idx;
+if(!session.expire || NOW > session.expire){
+  idx = Math.floor(Math.random()*data.length);
+  expire = NOW + 24*60*60*1000;
+  localStorage.setItem('elitehub_session',JSON.stringify({idx,expire}));
+}else{
+  idx = session.idx;
+  expire = session.expire;
+}
 
-let t=3;
-const timer=setInterval(()=>{
- document.getElementById('time').textContent=t;
- if(--t<0){
-  clearInterval(timer);
+/* GENERATING TIMER */
+let g=3;
+const gInt=setInterval(()=>{
+ document.getElementById('genTime').textContent=g;
+ if(--g<0){
+  clearInterval(gInt);
+  document.getElementById('gen').style.display='none';
   document.getElementById('email').textContent=data[idx].e;
   document.getElementById('password').textContent=data[idx].p;
+  startValidity();
  }
 },1000);
 
+/* 24H REAL-TIME COUNTDOWN */
+function startValidity(){
+ setInterval(()=>{
+  const left = expire - Date.now();
+  if(left<=0){
+   document.getElementById('validity').textContent='⛔ Key Expired';
+   return;
+  }
+  const h=Math.floor(left/3600000);
+  const m=Math.floor(left%3600000/60000);
+  const s=Math.floor(left%60000/1000);
+  document.getElementById('validity').textContent=
+   `⏳ Key valid for: ${h}h ${m}m ${s}s`;
+ },1000);
+}
+
 function copy(id){
  navigator.clipboard.writeText(document.getElementById(id).textContent);
- const toast=document.getElementById('toast');
- toast.classList.add('show');
- setTimeout(()=>toast.classList.remove('show'),1200);
+ const t=document.getElementById('toast');
+ t.classList.add('show');
+ setTimeout(()=>t.classList.remove('show'),1200);
 }
 </script>
 
 </body>
-  </html>
+                                                       </html>
