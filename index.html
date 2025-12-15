@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EliteHub Access</title>
+<title>EliteHub Secure Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Cache control (safe, no loop) -->
-<meta http-equiv="Cache-Control" content="no-store">
+<!-- Cache / Browser chase FIX -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 
 <style>
 :root{
-  --card:#0c1f36cc;
+  --bg:#040b18;
+  --card:#0b203bcc;
   --neon:#2bf2ff;
-  --green:#38ffb6;
+  --green:#2bffb6;
 }
 *{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
 
@@ -22,8 +24,8 @@ body{
   display:flex;align-items:center;justify-content:center;
   background:
     radial-gradient(circle at top,#1ad1ff33,transparent 45%),
-    radial-gradient(circle at bottom,#38ffb633,transparent 45%),
-    linear-gradient(135deg,#050b16,#071a2f,#050b16);
+    radial-gradient(circle at bottom,#2bffb633,transparent 45%),
+    linear-gradient(135deg,#040b18,#071a2f,#040b18);
   color:#eaf7ff;
 }
 
@@ -31,33 +33,32 @@ body{
   width:94%;max-width:420px;
   background:var(--card);
   backdrop-filter:blur(18px);
-  border-radius:28px;
+  border-radius:30px;
   padding:26px 22px 30px;
   text-align:center;
   box-shadow:0 40px 90px rgba(0,0,0,.7);
 }
 
 .logo{
-  width:112px;height:112px;border-radius:50%;
-  margin:auto;
-  background:
-    #000 url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg")
-    center/cover no-repeat;
-  box-shadow:0 0 45px rgba(43,242,255,.85);
+  width:120px;height:120px;border-radius:50%;
+  margin:auto;background:#000;overflow:hidden;
+  box-shadow:0 0 50px rgba(43,242,255,.95);
 }
+.logo img{width:100%;height:100%;object-fit:cover}
 
 h1{
   margin:14px 0 4px;font-size:28px;
-  text-shadow:0 0 18px rgba(43,242,255,.45);
+  text-shadow:0 0 18px rgba(43,242,255,.55);
 }
 .sub{font-size:14px;color:#9edfff}
 
 .ready{
   margin:10px 0 6px;
-  font-size:26px;font-weight:800;
+  font-size:26px;font-weight:900;
   color:var(--green);
-  text-shadow:0 0 18px rgba(56,255,182,.6);
+  text-shadow:0 0 22px rgba(43,255,182,.8);
 }
+
 .countdown{
   font-size:14px;color:#a6e7ff;margin-bottom:16px
 }
@@ -74,23 +75,23 @@ h1{
   margin-top:6px;
   font-size:15px;font-weight:700;
   word-break:break-all;
-  text-shadow:0 0 10px rgba(43,242,255,.25);
+  text-shadow:0 0 10px rgba(43,242,255,.3);
 }
 
 .copy{
   margin-top:10px;width:100%;
-  border-radius:12px;border:1px solid #1c7fb0;
+  border-radius:14px;border:none;
   background:linear-gradient(180deg,#0aa2d8,#077bb0);
   color:#001018;font-weight:800;
-  padding:10px;cursor:pointer;
-  box-shadow:0 0 22px rgba(10,162,216,.45);
+  padding:12px;cursor:pointer;
+  box-shadow:0 0 25px rgba(10,162,216,.55);
 }
 
-.note{
-  margin-top:14px;
+.trust{
+  margin-top:12px;
   font-size:12px;
-  color:#b6dbff;
-  line-height:1.5;
+  color:#9edfff;
+  text-shadow:0 0 14px rgba(43,242,255,.45);
 }
 </style>
 </head>
@@ -98,34 +99,38 @@ h1{
 <body>
 
 <div class="card">
-  <div class="logo"></div>
+  <!-- ✅ EliteHub LOGO (Already added) -->
+  <div class="logo">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg">
+  </div>
 
   <h1>EliteHub</h1>
   <div class="sub">Your Key Is Ready</div>
   <div class="ready">READY</div>
-  <div class="countdown" id="cd">Access unlocks in <span id="time">3</span>s</div>
+  <div class="countdown">Access unlocks in <span id="time">3</span>s</div>
 
+  <!-- EMAIL -->
   <div class="panel">
     <div class="label">EMAIL</div>
     <div class="value" id="email">—</div>
     <button class="copy" onclick="copyText('email')">Copy Email</button>
   </div>
 
+  <!-- PASSWORD -->
   <div class="panel">
     <div class="label">PASSWORD</div>
     <div class="value" id="password">—</div>
     <button class="copy" onclick="copyText('password')">Copy Password</button>
   </div>
 
-  <div class="note">
-    EliteHub Secure Distribution System<br>
-    Verified • Encrypted • Trusted Access
+  <div class="trust">
+    EliteHub Trusted Access • Secure • Verified
   </div>
 </div>
 
 <script>
-/* DATA */
-const data=[
+// Demo credentials (UI purpose)
+const data = [
  {e:'Elite1@gmail.com',p:'Elite@123'},
  {e:'Elite2@gmail.com',p:'Elite@234'},
  {e:'Elite3@gmail.com',p:'Elite@345'},
@@ -138,42 +143,29 @@ const data=[
  {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-/* DEVICE KEY */
-let idx = localStorage.getItem("elitehub_key");
+// One browser session = one key (no cache chase)
+let idx = sessionStorage.getItem('elitehub_key');
 if(idx === null){
   idx = Math.floor(Math.random()*data.length);
-  localStorage.setItem("elitehub_key", idx);
+  sessionStorage.setItem('elitehub_key',idx);
 }
 
-/* FIRST VISIT CHECK */
-let unlocked = localStorage.getItem("elitehub_unlocked");
+// Countdown = 3 seconds
+let t = 3;
+const timer = setInterval(()=>{
+  t--;
+  document.getElementById('time').textContent = t;
+  if(t<=0){
+    clearInterval(timer);
+    document.getElementById('email').textContent = data[idx].e;
+    document.getElementById('password').textContent = data[idx].p;
+  }
+},1000);
 
-if(unlocked){
-  showData();
-  document.getElementById("cd").style.display="none";
-}else{
-  let t = 3;
-  const timer = setInterval(()=>{
-    t--;
-    document.getElementById("time").textContent=t;
-    if(t<=0){
-      clearInterval(timer);
-      localStorage.setItem("elitehub_unlocked","1");
-      showData();
-      document.getElementById("cd").style.display="none";
-    }
-  },1000);
-}
-
-function showData(){
-  document.getElementById("email").textContent = data[idx].e;
-  document.getElementById("password").textContent = data[idx].p;
-}
-
+// Copy buttons
 function copyText(id){
-  navigator.clipboard.writeText(
-    document.getElementById(id).textContent
-  );
+  const txt = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(txt);
 }
 </script>
 
