@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,33 +6,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box;font-family:Segoe UI,Arial}
+*{
+  box-sizing:border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
 body{
   margin:0;
   min-height:100vh;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   background:radial-gradient(circle at top,#0b1d33,#020814);
   color:#fff;
 }
-
 .card{
   width:92%;
   max-width:380px;
-  background:linear-gradient(180deg,#0f2340,#071427);
+  background:linear-gradient(180deg,#0f2340,#07152b);
   border-radius:22px;
-  padding:28px 22px 30px;
+  padding:26px 22px 30px;
   text-align:center;
-  box-shadow:0 0 40px rgba(0,170,255,.35);
-  animation:fade 1s ease;
+  box-shadow:0 0 45px rgba(0,170,255,.35);
+  animation:fadeIn 1s ease;
 }
-
-@keyframes fade{
+@keyframes fadeIn{
   from{opacity:0;transform:translateY(20px)}
   to{opacity:1;transform:none}
 }
-
 .logo{
   width:110px;
   height:110px;
@@ -45,65 +44,53 @@ body{
   align-items:center;
   justify-content:center;
 }
-
 .logo span{
   font-size:42px;
   font-weight:800;
 }
-
 h1{
-  margin:18px 0 6px;
+  margin:12px 0 4px;
   font-size:28px;
 }
-
 .sub{
-  color:#9fdcff;
   font-size:14px;
+  color:#9fdcff;
   margin-bottom:18px;
 }
-
 .ready{
   font-size:30px;
   font-weight:800;
-  color:#1ecbff;
+  color:#1cffbf;
   margin:10px 0 18px;
 }
-
 .field{
   background:#020d1f;
-  border:1px solid #1d5a88;
+  border:1px solid #155a88;
   border-radius:14px;
   padding:14px;
   margin-bottom:14px;
 }
-
 .label{
   font-size:12px;
-  color:#8fd7ff;
+  color:#9fdcff;
   margin-bottom:6px;
 }
-
 .value{
   font-size:16px;
+  font-weight:600;
   word-break:break-all;
 }
-
 .copy{
-  margin-top:8px;
-  background:#19c6ff;
-  border:none;
-  border-radius:20px;
-  padding:8px 16px;
-  font-weight:700;
+  margin-top:6px;
+  font-size:12px;
+  color:#5ad1ff;
   cursor:pointer;
 }
-
-.copy:active{transform:scale(.95)}
-
 .footer{
   margin-top:18px;
-  font-size:13px;
-  color:#78bfe9;
+  font-size:12px;
+  color:#7fbbe6;
+  opacity:.9;
 }
 </style>
 </head>
@@ -114,50 +101,55 @@ h1{
   <div class="logo"><span>E</span></div>
 
   <h1>EliteHub</h1>
-  <div class="sub">Secure Access System</div>
+  <div class="sub">Secure Access Panel</div>
 
-  <div class="ready">ACCESS GRANTED</div>
+  <div class="ready">READY</div>
 
   <div class="field">
     <div class="label">ACCESS KEY</div>
-    <div class="value" id="accessKey">----</div>
-    <button class="copy" onclick="copyText('accessKey')">Copy Key</button>
+    <div class="value" id="accessKey">Loading...</div>
+    <div class="copy" onclick="copyText('accessKey')">Tap to copy</div>
   </div>
 
   <div class="field">
     <div class="label">PASSWORD</div>
-    <div class="value" id="password">----</div>
-    <button class="copy" onclick="copyText('password')">Copy Password</button>
+    <div class="value" id="password">Loading...</div>
+    <div class="copy" onclick="copyText('password')">Tap to copy</div>
   </div>
 
   <div class="footer">
-    This key is locked to your device
+    This key is unique to your device<br>
+    Do not share with others
   </div>
 </div>
 
 <script>
-function gen(len){
-  return Math.random().toString(36).substring(2,2+len).toUpperCase();
+function randomString(len){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let out="";
+  for(let i=0;i<len;i++){
+    out+=chars.charAt(Math.floor(Math.random()*chars.length));
+  }
+  return out;
 }
 
-let key = localStorage.getItem("elite_key");
-let pass = localStorage.getItem("elite_pass");
+let key = localStorage.getItem("elite_access_key");
+let pass = localStorage.getItem("elite_password");
 
 if(!key || !pass){
-  key = "EH-" + gen(8);
-  pass = gen(10);
-  localStorage.setItem("elite_key",key);
-  localStorage.setItem("elite_pass",pass);
+  key = "ELITE-" + randomString(4) + "-" + randomString(4);
+  pass = randomString(8);
+  localStorage.setItem("elite_access_key",key);
+  localStorage.setItem("elite_password",pass);
 }
 
 document.getElementById("accessKey").innerText = key;
 document.getElementById("password").innerText = pass;
 
 function copyText(id){
-  navigator.clipboard.writeText(
-    document.getElementById(id).innerText
-  );
-  alert("Copied!");
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text);
+  alert("Copied");
 }
 </script>
 
