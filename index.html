@@ -12,10 +12,9 @@
 
 <style>
 :root{
-  --bg:#040b18;
   --card:#0b203bcc;
-  --neon:#2bf2ff;
   --green:#2bffb6;
+  --danger:#ff4d4d;
 }
 *{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
 
@@ -44,37 +43,16 @@ body{
 .logo img{width:100%;height:100%;object-fit:cover}
 
 .brand{
-  margin-top:14px;
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:1px;
+  margin-top:14px;font-size:28px;font-weight:900;
   text-shadow:0 0 20px rgba(43,242,255,.75);
 }
+.title{font-size:14px;color:#9edfff}
 
-.title{
-  margin-top:6px;
-  font-size:14px;
-  color:#9edfff;
-}
-
-.status{
-  margin:18px 0 6px;
-  font-size:15px;
-  color:#c6f4ff;
-}
-
-.warning{
-  font-size:12px;
-  color:#89cfff;
-  margin-bottom:10px;
-}
-
+.status{margin:16px 0 4px}
 .timer{
-  font-size:22px;
-  font-weight:800;
-  color:var(--green);
+  font-size:22px;font-weight:800;color:var(--green);
   text-shadow:0 0 16px rgba(43,255,182,.8);
-  margin-bottom:18px;
+  margin-bottom:16px;
 }
 
 .panel{
@@ -85,11 +63,7 @@ body{
 }
 
 .label{font-size:12px;color:#9fdcff}
-.value{
-  margin-top:6px;
-  font-size:15px;font-weight:700;
-  word-break:break-all;
-}
+.value{margin-top:6px;font-size:15px;font-weight:700}
 
 .copy{
   margin-top:10px;width:100%;
@@ -99,17 +73,17 @@ body{
   padding:11px;cursor:pointer;
 }
 
-.validity{
-  margin-top:10px;
+/* 🔴 SINGLE WARNING */
+.alert{
+  margin:12px 0 6px;
   font-size:13px;
-  color:#9edfff;
+  font-weight:800;
+  color:var(--danger);
+  text-shadow:0 0 10px rgba(255,77,77,.6);
 }
 
-.trust{
-  margin-top:12px;
-  font-size:12px;
-  color:#9edfff;
-}
+.validity{margin-top:8px;font-size:13px;color:#9edfff}
+.trust{margin-top:10px;font-size:12px;color:#9edfff}
 </style>
 </head>
 
@@ -125,25 +99,29 @@ body{
   <div class="title">Secure Key Access</div>
 
   <div class="status">Generating secure access key…</div>
-  <div class="warning">Do not share this key with anyone</div>
-
   <div class="timer"><span id="time">3</span>s</div>
 
+  <!-- EMAIL -->
   <div class="panel">
     <div class="label">EMAIL</div>
     <div class="value" id="email">—</div>
     <button class="copy" onclick="copyText('email')">Copy Email</button>
   </div>
 
+  <!-- PASSWORD -->
   <div class="panel">
     <div class="label">PASSWORD</div>
     <div class="value" id="password">—</div>
     <button class="copy" onclick="copyText('password')">Copy Password</button>
   </div>
 
+  <!-- 🔴 ONE WARNING ONLY -->
+  <div class="alert">
+    ⚠️ If you delete or uninstall this app, you will lose access permanently.
+  </div>
+
   <div class="validity">
-    ⏳ KEY VALIDITY<br>
-    🕒 Key valid for: 24 Hours
+    ⏳ Key valid for: 24 Hours
   </div>
 
   <div class="trust">
@@ -153,7 +131,7 @@ body{
 </div>
 
 <script>
-const data = [
+const data=[
  {e:'Elite1@gmail.com',p:'Elite@123'},
  {e:'Elite2@gmail.com',p:'Elite@234'},
  {e:'Elite3@gmail.com',p:'Elite@345'},
@@ -166,25 +144,22 @@ const data = [
  {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-const now = Date.now();
-const saved = JSON.parse(localStorage.getItem('elitehub_session') || '{}');
-
+const now=Date.now();
+const saved=JSON.parse(localStorage.getItem('elitehub_session')||'{}');
 let idx;
-if(!saved.time || now - saved.time > 86400000){
-  idx = Math.floor(Math.random()*data.length);
+if(!saved.time||now-saved.time>86400000){
+  idx=Math.floor(Math.random()*data.length);
   localStorage.setItem('elitehub_session',JSON.stringify({idx,time:now}));
-}else{
-  idx = saved.idx;
-}
+}else idx=saved.idx;
 
-let t = 3;
-const timer = setInterval(()=>{
+let t=3;
+const timer=setInterval(()=>{
   t--;
-  document.getElementById('time').textContent = t;
+  document.getElementById('time').textContent=t;
   if(t<=0){
     clearInterval(timer);
-    document.getElementById('email').textContent = data[idx].e;
-    document.getElementById('password').textContent = data[idx].p;
+    email.textContent=data[idx].e;
+    password.textContent=data[idx].p;
   }
 },1000);
 
