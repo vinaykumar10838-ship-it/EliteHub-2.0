@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,104 +7,103 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;font-family:Segoe UI,Arial}
 body{
   margin:0;
-  height:100vh;
+  min-height:100vh;
   display:flex;
-  align-items:center;
   justify-content:center;
-  background:
-    radial-gradient(800px circle at 20% 10%, #0ff3, transparent 40%),
-    radial-gradient(600px circle at 80% 90%, #4f8cff33, transparent 45%),
-    linear-gradient(135deg,#050b16,#0b1a2e,#050b16);
-  font-family: 'Segoe UI', Arial, sans-serif;
+  align-items:center;
+  background:radial-gradient(circle at top,#0b1d33,#020814);
   color:#fff;
 }
 
 .card{
-  position:relative;
-  width:90%;
-  max-width:400px;
-  padding:30px 26px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter: blur(16px);
-  box-shadow:
-    0 30px 80px rgba(0,0,0,.6),
-    inset 0 0 0 1px rgba(255,255,255,.08);
-  overflow:hidden;
+  width:92%;
+  max-width:380px;
+  background:linear-gradient(180deg,#0f2340,#071427);
+  border-radius:22px;
+  padding:28px 22px 30px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(0,170,255,.35);
+  animation:fade 1s ease;
 }
 
-/* animated light ring */
-.card::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:22px;
-  background:conic-gradient(from 0deg, #00e5ff, #4f8cff, #00ffa2, #00e5ff);
-  filter:blur(18px);
-  opacity:.35;
-  animation:spin 10s linear infinite;
-  z-index:-1;
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
 }
-@keyframes spin{to{transform:rotate(360deg)}}
 
 .logo{
-  width:72px;
-  height:72px;
-  margin:auto;
+  width:110px;
+  height:110px;
   border-radius:50%;
-  background:radial-gradient(circle at top,#00e5ff,#0051ff);
+  margin:auto;
+  background:#000;
+  box-shadow:0 0 30px #19c6ff;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:26px;
-  font-weight:700;
-  letter-spacing:.5px;
-  box-shadow:0 0 30px #00e5ff66;
 }
 
-h2{
+.logo span{
+  font-size:42px;
+  font-weight:800;
+}
+
+h1{
   margin:18px 0 6px;
-  font-weight:600;
-  text-align:center;
+  font-size:28px;
 }
 
 .sub{
-  text-align:center;
+  color:#9fdcff;
   font-size:14px;
-  opacity:.8;
+  margin-bottom:18px;
 }
 
-.box{
-  margin-top:22px;
-  padding:18px;
+.ready{
+  font-size:30px;
+  font-weight:800;
+  color:#1ecbff;
+  margin:10px 0 18px;
+}
+
+.field{
+  background:#020d1f;
+  border:1px solid #1d5a88;
   border-radius:14px;
-  background:rgba(0,0,0,.25);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  padding:14px;
+  margin-bottom:14px;
 }
 
-.row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:10px 0;
-  font-size:16px;
+.label{
+  font-size:12px;
+  color:#8fd7ff;
+  margin-bottom:6px;
 }
 
-.label{opacity:.7}
 .value{
-  color:#3ddcff;
-  font-weight:600;
-  letter-spacing:.5px;
+  font-size:16px;
+  word-break:break-all;
 }
 
-.note{
+.copy{
+  margin-top:8px;
+  background:#19c6ff;
+  border:none;
+  border-radius:20px;
+  padding:8px 16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.copy:active{transform:scale(.95)}
+
+.footer{
   margin-top:18px;
-  text-align:center;
-  font-size:12.5px;
-  opacity:.6;
+  font-size:13px;
+  color:#78bfe9;
 }
 </style>
 </head>
@@ -111,49 +111,54 @@ h2{
 <body>
 
 <div class="card">
-  <div class="logo">EH</div>
+  <div class="logo"><span>E</span></div>
 
-  <h2>Secure Access Details</h2>
-  <div class="sub">Generated uniquely for this device</div>
+  <h1>EliteHub</h1>
+  <div class="sub">Secure Access System</div>
 
-  <div class="box">
-    <div class="row">
-      <span class="label">User ID</span>
-      <span class="value" id="uid"></span>
-    </div>
-    <div class="row">
-      <span class="label">Access Code</span>
-      <span class="value" id="code"></span>
-    </div>
+  <div class="ready">ACCESS GRANTED</div>
+
+  <div class="field">
+    <div class="label">ACCESS KEY</div>
+    <div class="value" id="accessKey">----</div>
+    <button class="copy" onclick="copyText('accessKey')">Copy Key</button>
   </div>
 
-  <div class="note">
-    Keep these details confidential.  
-    Automatically generated for this session.
+  <div class="field">
+    <div class="label">PASSWORD</div>
+    <div class="value" id="password">----</div>
+    <button class="copy" onclick="copyText('password')">Copy Password</button>
+  </div>
+
+  <div class="footer">
+    This key is locked to your device
   </div>
 </div>
 
 <script>
-// ---- ONE DEVICE = ONE ID & CODE (localStorage) ----
-function genUID(){
-  return "EH-" + Math.floor(100000 + Math.random()*900000);
-}
-function genCode(){
-  return Math.random().toString(36).substring(2,8).toUpperCase();
+function gen(len){
+  return Math.random().toString(36).substring(2,2+len).toUpperCase();
 }
 
-let uid = localStorage.getItem("elite_uid");
-let code = localStorage.getItem("elite_code");
+let key = localStorage.getItem("elite_key");
+let pass = localStorage.getItem("elite_pass");
 
-if(!uid || !code){
-  uid = genUID();
-  code = genCode();
-  localStorage.setItem("elite_uid", uid);
-  localStorage.setItem("elite_code", code);
+if(!key || !pass){
+  key = "EH-" + gen(8);
+  pass = gen(10);
+  localStorage.setItem("elite_key",key);
+  localStorage.setItem("elite_pass",pass);
 }
 
-document.getElementById("uid").innerText = uid;
-document.getElementById("code").innerText = code;
+document.getElementById("accessKey").innerText = key;
+document.getElementById("password").innerText = pass;
+
+function copyText(id){
+  navigator.clipboard.writeText(
+    document.getElementById(id).innerText
+  );
+  alert("Copied!");
+}
 </script>
 
 </body>
