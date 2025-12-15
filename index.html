@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +46,6 @@ body{
 }
 .logo img{width:100%;height:100%;object-fit:cover}
 
-/* BRAND */
 .brand{
   margin-top:16px;
   font-size:30px;
@@ -62,16 +60,20 @@ body{
   margin-top:4px;
 }
 
-/* TOP STATUS */
 .status{
-  margin:18px 0 16px;
+  margin:18px 0 6px;
   font-size:15px;
   font-weight:700;
   color:var(--text);
 }
-.status .lock{color:var(--elite)}
 
-/* PANELS */
+.startTimer{
+  font-size:22px;
+  font-weight:900;
+  color:var(--elite);
+  margin-bottom:16px;
+}
+
 .panel{
   background:#06152c;
   border:1px solid #123c6b;
@@ -80,16 +82,8 @@ body{
   margin-bottom:18px;
 }
 
-.label{
-  font-size:12px;
-  color:#9fdcff;
-  letter-spacing:.6px;
-}
-.value{
-  margin-top:6px;
-  font-size:16px;
-  font-weight:700;
-}
+.label{font-size:12px;color:#9fdcff}
+.value{margin-top:6px;font-size:16px;font-weight:700}
 
 .btn{
   margin-top:12px;
@@ -101,6 +95,8 @@ body{
   font-weight:800;
   cursor:pointer;
 }
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
 .btn-email{
   background:linear-gradient(180deg,#1bbcff,#0d8fcf);
   color:#001018;
@@ -110,7 +106,6 @@ body{
   color:#002018;
 }
 
-/* WARNING */
 .warning{
   margin-top:12px;
   font-size:13px;
@@ -118,22 +113,18 @@ body{
   color:var(--red);
 }
 
-/* TIMER (BOTTOM SMALL) */
 .timer{
   margin-top:10px;
   font-size:13px;
   font-weight:700;
 }
-.timer span{transition:.3s}
 
-/* FOOTER */
 .footer{
   margin-top:12px;
   font-size:12px;
   color:#9edfff;
 }
 
-/* TOAST */
 .toast{
   position:fixed;
   bottom:20px;
@@ -165,35 +156,36 @@ body{
   </div>
   <div class="subtitle">Secure Key Access</div>
 
-  <!-- 🔐 TOP STATUS -->
-  <div class="status">
-    <span class="lock">🔐</span>
-    <span class="elite"> Elite </span>
-    <span class="hub">Hub </span>
-    <span>Access Key Active</span>
+  <!-- STATUS -->
+  <div class="status" id="statusText">
+    Initializing secure session…
   </div>
+  <div class="startTimer" id="startTimer">3s</div>
 
   <!-- EMAIL -->
   <div class="panel">
     <div class="label">EMAIL</div>
     <div class="value" id="email">—</div>
-    <button class="btn btn-email" onclick="copyText('email')">📧 Copy Email</button>
+    <button class="btn btn-email" id="copyEmail" disabled onclick="copyText('email')">
+      📧 Copy Email
+    </button>
   </div>
 
   <!-- PASSWORD -->
   <div class="panel">
     <div class="label">PASSWORD</div>
     <div class="value" id="password">—</div>
-    <button class="btn btn-pass" onclick="copyText('password')">🔑 Copy Password</button>
+    <button class="btn btn-pass" id="copyPass" disabled onclick="copyText('password')">
+      🔑 Copy Password
+    </button>
 
     <div class="warning">
       ⚠️ If you delete or uninstall this app, you will lose access permanently.
     </div>
   </div>
 
-  <!-- TIMER BOTTOM -->
   <div class="timer">
-    <span id="timerText">⏳ Access valid for --</span>
+    <span id="timerText"></span>
   </div>
 
   <div class="footer">
@@ -217,42 +209,59 @@ const data=[
  {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-const now=Date.now();
-let s=JSON.parse(localStorage.getItem('elitehub_session')||'{}');
-let idx,expire;
+let start=3;
+const startInt=setInterval(()=>{
+  start--;
+  document.getElementById('startTimer').textContent=start+'s';
+  if(start===0){
+    clearInterval(startInt);
+    document.getElementById('startTimer').style.display='none';
+    activateSession();
+  }
+},1000);
 
-if(!s.expire||now>s.expire){
-  idx=Math.floor(Math.random()*data.length);
-  expire=now+24*60*60*1000;
-  localStorage.setItem('elitehub_session',JSON.stringify({idx,expire}));
-}else{
-  idx=s.idx;
-  expire=s.expire;
-}
+function activateSession(){
+  const now=Date.now();
+  let s=JSON.parse(localStorage.getItem('elitehub_session')||'{}');
+  let idx,expire;
 
-email.textContent=data[idx].e;
-password.textContent=data[idx].p;
-
-setInterval(()=>{
-  const left=expire-Date.now();
-  const t=document.getElementById('timerText');
-
-  if(left<=0){
-    t.textContent='⛔ Access expired';
-    t.style.color='var(--grey)';
-    return;
+  if(!s.expire||now>s.expire){
+    idx=Math.floor(Math.random()*data.length);
+    expire=now+24*60*60*1000;
+    localStorage.setItem('elitehub_session',JSON.stringify({idx,expire}));
+  }else{
+    idx=s.idx; expire=s.expire;
   }
 
-  const h=Math.floor(left/3600000);
-  const m=Math.floor(left%3600000/60000);
-  const s=Math.floor(left%60000/1000);
+  email.textContent=data[idx].e;
+  password.textContent=data[idx].p;
 
-  t.textContent=`⏳ Access valid for ${h}h ${m}m ${s}s`;
+  copyEmail.disabled=false;
+  copyPass.disabled=false;
 
-  if(left<30*60*1000) t.style.color='var(--red)';
-  else if(left<6*60*60*1000) t.style.color='var(--yellow)';
-  else t.style.color='var(--elite)';
-},1000);
+  statusText.innerHTML='🔐 <span style="color:#00E676">Elite</span> <span style="color:#00BFA5">Hub</span> Access Key Active';
+
+  setInterval(()=>{
+    const left=expire-Date.now();
+    const t=document.getElementById('timerText');
+
+    if(left<=0){
+      t.textContent='⛔ Access expired';
+      t.style.color='#9E9E9E';
+      return;
+    }
+
+    const h=Math.floor(left/3600000);
+    const m=Math.floor(left%3600000/60000);
+    const s=Math.floor(left%60000/1000);
+
+    t.textContent=`⏳ Access valid for ${h}h ${m}m ${s}s`;
+
+    if(left<30*60*1000) t.style.color='#FF5252';
+    else if(left<6*60*60*1000) t.style.color='#FFC107';
+    else t.style.color='#00E676';
+  },1000);
+}
 
 function copyText(id){
   navigator.clipboard.writeText(document.getElementById(id).textContent);
