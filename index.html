@@ -5,79 +5,94 @@
 <title>EliteHub Secure Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- 🔥 CACHE KILLER (IMPORTANT) -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
 <style>
-*{
-  box-sizing:border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
-}
+*{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
 body{
   margin:0;
   min-height:100vh;
   display:flex;
-  align-items:center;
   justify-content:center;
-  background:radial-gradient(circle at top,#0b1d33,#020814);
+  align-items:center;
+  background:
+    radial-gradient(700px circle at 20% 10%, #00e5ff33, transparent 40%),
+    radial-gradient(700px circle at 80% 90%, #4f8cff33, transparent 40%),
+    linear-gradient(135deg,#050b16,#0b1a2e,#050b16);
   color:#fff;
 }
+
+/* CARD */
 .card{
   width:92%;
   max-width:380px;
-  background:linear-gradient(180deg,#0f2340,#07152b);
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(16px);
   border-radius:22px;
-  padding:26px 22px 30px;
+  padding:28px 22px 30px;
   text-align:center;
-  box-shadow:0 0 45px rgba(0,170,255,.35);
-  animation:fadeIn 1s ease;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  position:relative;
+  overflow:hidden;
+  animation:fade 1s ease;
 }
-@keyframes fadeIn{
+@keyframes fade{
   from{opacity:0;transform:translateY(20px)}
   to{opacity:1;transform:none}
 }
+
+/* LIGHT RING */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:24px;
+  background:conic-gradient(from 0deg,#00e5ff,#4f8cff,#00ffa2,#00e5ff);
+  filter:blur(18px);
+  opacity:.35;
+  animation:spin 12s linear infinite;
+  z-index:-1;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* LOGO */
 .logo{
-  width:110px;
-  height:110px;
+  width:100px;
+  height:100px;
   border-radius:50%;
-  margin:auto;
   background:#000;
-  box-shadow:0 0 30px #19c6ff;
+  box-shadow:0 0 35px #19c6ff;
   display:flex;
   align-items:center;
   justify-content:center;
+  margin:auto;
 }
 .logo span{
   font-size:42px;
   font-weight:800;
 }
-h1{
-  margin:12px 0 4px;
-  font-size:28px;
-}
-.sub{
-  font-size:14px;
-  color:#9fdcff;
-  margin-bottom:18px;
-}
-.ready{
-  font-size:30px;
-  font-weight:800;
-  color:#1cffbf;
-  margin:10px 0 18px;
-}
-.field{
+
+/* TEXT */
+h1{margin:14px 0 4px;font-size:28px}
+.sub{font-size:14px;color:#9fdcff;margin-bottom:16px}
+.ready{font-size:30px;font-weight:800;color:#1cffbf;margin-bottom:18px}
+
+/* BOX */
+.box{
   background:#020d1f;
   border:1px solid #155a88;
   border-radius:14px;
   padding:14px;
   margin-bottom:14px;
 }
-.label{
-  font-size:12px;
-  color:#9fdcff;
-  margin-bottom:6px;
-}
+.label{font-size:12px;color:#9fdcff}
 .value{
   font-size:16px;
   font-weight:600;
+  margin-top:6px;
   word-break:break-all;
 }
 .copy{
@@ -86,6 +101,8 @@ h1{
   color:#5ad1ff;
   cursor:pointer;
 }
+
+/* FOOTER */
 .footer{
   margin-top:18px;
   font-size:12px;
@@ -93,6 +110,15 @@ h1{
   opacity:.9;
 }
 </style>
+
+<!-- 🔥 JS CACHE RESET (SAME LINK FIX) -->
+<script>
+  const VERSION="v7";   // ← future me sirf number badalna
+  if(!location.search.includes(VERSION)){
+    location.replace(location.pathname+"?"+VERSION);
+  }
+</script>
+
 </head>
 
 <body>
@@ -103,52 +129,51 @@ h1{
   <h1>EliteHub</h1>
   <div class="sub">Secure Access Panel</div>
 
-  <div class="ready">READY</div>
+  <div class="ready">ACCESS GRANTED</div>
 
-  <div class="field">
+  <div class="box">
     <div class="label">ACCESS KEY</div>
-    <div class="value" id="accessKey">Loading...</div>
-    <div class="copy" onclick="copyText('accessKey')">Tap to copy</div>
+    <div class="value" id="key">Loading...</div>
+    <div class="copy" onclick="copyText('key')">Tap to copy</div>
   </div>
 
-  <div class="field">
+  <div class="box">
     <div class="label">PASSWORD</div>
-    <div class="value" id="password">Loading...</div>
-    <div class="copy" onclick="copyText('password')">Tap to copy</div>
+    <div class="value" id="pass">Loading...</div>
+    <div class="copy" onclick="copyText('pass')">Tap to copy</div>
   </div>
 
   <div class="footer">
-    This key is unique to your device<br>
-    Do not share with others
+    Unique per device • Do not share
   </div>
 </div>
 
 <script>
-function randomString(len){
-  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let out="";
-  for(let i=0;i<len;i++){
-    out+=chars.charAt(Math.floor(Math.random()*chars.length));
-  }
-  return out;
+/* 🔐 ONE DEVICE = ONE KEY */
+function gen(len){
+  const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let o="";
+  for(let i=0;i<len;i++) o+=c[Math.floor(Math.random()*c.length)];
+  return o;
 }
 
-let key = localStorage.getItem("elite_access_key");
-let pass = localStorage.getItem("elite_password");
+let k=localStorage.getItem("elite_key");
+let p=localStorage.getItem("elite_pass");
 
-if(!key || !pass){
-  key = "ELITE-" + randomString(4) + "-" + randomString(4);
-  pass = randomString(8);
-  localStorage.setItem("elite_access_key",key);
-  localStorage.setItem("elite_password",pass);
+if(!k || !p){
+  k="ELITE-"+gen(4)+"-"+gen(4);
+  p=gen(8);
+  localStorage.setItem("elite_key",k);
+  localStorage.setItem("elite_pass",p);
 }
 
-document.getElementById("accessKey").innerText = key;
-document.getElementById("password").innerText = pass;
+document.getElementById("key").innerText=k;
+document.getElementById("pass").innerText=p;
 
 function copyText(id){
-  const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text);
+  navigator.clipboard.writeText(
+    document.getElementById(id).innerText
+  );
   alert("Copied");
 }
 </script>
