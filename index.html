@@ -5,7 +5,7 @@
 <title>EliteHub Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 🔥 Cache / Chase FIX -->
+<!-- 🔁 STRONG CACHE / CHASE FIX -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -29,6 +29,7 @@ body{
   color:#eaf7ff;
 }
 
+/* CARD */
 .card{
   width:94%;max-width:420px;
   background:var(--card);
@@ -40,13 +41,15 @@ body{
   position:relative;
 }
 
-/* LOGO */
+/* LOGO – background-image (100% reliable) */
 .logo{
   width:112px;height:112px;border-radius:50%;
-  margin:auto;background:#000;overflow:hidden;
-  box-shadow:0 0 45px rgba(43,242,255,.8);
+  margin:auto;
+  background:
+    #000 url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg")
+    center/cover no-repeat;
+  box-shadow:0 0 45px rgba(43,242,255,.85);
 }
-.logo img{width:100%;height:100%;object-fit:cover}
 
 /* TEXT */
 h1{
@@ -54,14 +57,12 @@ h1{
   text-shadow:0 0 18px rgba(43,242,255,.45);
 }
 .sub{font-size:14px;color:#9edfff}
-
 .ready{
   margin:10px 0 6px;
   font-size:26px;font-weight:800;
   color:var(--green);
   text-shadow:0 0 18px rgba(56,255,182,.6);
 }
-
 .countdown{
   font-size:14px;color:#a6e7ff;margin-bottom:16px
 }
@@ -73,7 +74,6 @@ h1{
   border-radius:18px;
   padding:14px;margin-bottom:14px;
 }
-
 .label{font-size:12px;color:#9fdcff}
 .value{
   margin-top:6px;
@@ -96,30 +96,32 @@ h1{
   margin-top:12px;font-size:12px;color:#9bbfe0
 }
 </style>
+
+<!-- 🔥 HARD CHASE BREAKER (same link, force fresh) -->
+<script>
+const VERSION="vFINAL_1";
+if(!location.search.includes(VERSION)){
+  location.replace(location.pathname + "?" + VERSION);
+}
+</script>
 </head>
 
 <body>
 
 <div class="card">
-
-  <!-- ✅ EliteHub ORIGINAL LOGO -->
-  <div class="logo">
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg">
-  </div>
+  <div class="logo"></div>
 
   <h1>EliteHub</h1>
   <div class="sub">Your Key Is Ready</div>
   <div class="ready">READY</div>
   <div class="countdown">Access unlocks in <span id="time">20</span>s</div>
 
-  <!-- EMAIL -->
   <div class="panel">
     <div class="label">EMAIL</div>
     <div class="value" id="email">—</div>
     <button class="copy" onclick="copyText('email')">Copy Email</button>
   </div>
 
-  <!-- PASSWORD -->
   <div class="panel">
     <div class="label">PASSWORD</div>
     <div class="value" id="password">—</div>
@@ -134,7 +136,7 @@ h1{
 
 <script>
 /* 🔐 EMAIL–PASSWORD LIST */
-const data = [
+const data=[
  {e:'Elite1@gmail.com',p:'Elite@123'},
  {e:'Elite2@gmail.com',p:'Elite@234'},
  {e:'Elite3@gmail.com',p:'Elite@345'},
@@ -147,29 +149,30 @@ const data = [
  {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-/* 🔒 One device = one account */
-let idx = localStorage.getItem('elitehub_key');
-if(idx === null){
-  idx = Math.floor(Math.random()*data.length);
-  localStorage.setItem('elitehub_key',idx);
+/* ONE DEVICE = ONE ACCOUNT */
+let idx=localStorage.getItem("elitehub_key");
+if(idx===null){
+  idx=Math.floor(Math.random()*data.length);
+  localStorage.setItem("elitehub_key",idx);
 }
 
-/* ⏱ Countdown */
-let t = 20;
-const timer = setInterval(()=>{
+/* COUNTDOWN */
+let t=20;
+const timer=setInterval(()=>{
   t--;
-  document.getElementById('time').textContent = t;
+  document.getElementById("time").textContent=t;
   if(t<=0){
     clearInterval(timer);
-    document.getElementById('email').textContent = data[idx].e;
-    document.getElementById('password').textContent = data[idx].p;
+    document.getElementById("email").textContent=data[idx].e;
+    document.getElementById("password").textContent=data[idx].p;
   }
 },1000);
 
-/* 📋 Copy */
+/* COPY */
 function copyText(id){
-  const txt = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(txt);
+  navigator.clipboard.writeText(
+    document.getElementById(id).textContent
+  );
 }
 </script>
 
