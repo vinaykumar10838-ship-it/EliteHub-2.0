@@ -5,19 +5,17 @@
 <title>EliteHub – Secure Key Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- CACHE FIX -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 
-<!-- LOGO PRELOAD (FAST LOAD) -->
 <link rel="preload" as="image" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg">
 
 <style>
 :root{
   --bg:#050c19;
   --card:#0b203bcc;
-  --neon:#2bf2ff;
+  --blue:#0aa2d8;
   --green:#2bffb6;
   --danger:#ff4d4d;
 }
@@ -33,25 +31,26 @@ body{
 .card{
   width:94%;max-width:420px;
   background:var(--card);
-  border-radius:28px;
-  padding:26px 22px 30px;
+  border-radius:30px;
+  padding:28px 22px 32px;
   text-align:center;
   box-shadow:0 30px 80px rgba(0,0,0,.65);
+  position:relative;
 }
 
 .logo{
-  width:112px;height:112px;border-radius:50%;
+  width:115px;height:115px;border-radius:50%;
   margin:auto;overflow:hidden;background:#000;
-  box-shadow:0 0 40px rgba(43,242,255,.7);
+  box-shadow:0 0 45px rgba(43,242,255,.75);
 }
 .logo img{width:100%;height:100%;object-fit:cover}
 
 .brand{
-  margin-top:14px;
-  font-size:30px;
+  margin-top:16px;
+  font-size:32px;
   font-weight:900;
-  letter-spacing:1px;
-  text-shadow:0 0 18px rgba(43,242,255,.7);
+  letter-spacing:1.2px;
+  text-shadow:0 0 22px rgba(43,242,255,.85);
 }
 
 .title{
@@ -61,7 +60,7 @@ body{
 }
 
 .status{
-  margin:18px 0 6px;
+  margin:20px 0 6px;
   font-size:15px;
   color:#c6f4ff;
 }
@@ -71,18 +70,23 @@ body{
   font-weight:800;
   color:var(--green);
   text-shadow:0 0 16px rgba(43,255,182,.7);
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
 
 .panel{
   background:#06152c;
   border:1px solid #123c6b;
   border-radius:18px;
-  padding:14px;
-  margin-bottom:14px;
+  padding:16px;
+  margin-bottom:20px;
 }
 
-.label{font-size:12px;color:#9fdcff}
+.label{
+  font-size:12px;
+  color:#9fdcff;
+  letter-spacing:.5px;
+}
+
 .value{
   margin-top:6px;
   font-size:15px;
@@ -91,12 +95,28 @@ body{
 }
 
 .copy{
-  margin-top:10px;width:100%;
-  border-radius:14px;border:none;
-  background:linear-gradient(180deg,#0aa2d8,#077bb0);
-  color:#001018;
+  margin-top:12px;
+  width:100%;
+  border-radius:14px;
+  border:none;
+  padding:12px;
   font-weight:800;
-  padding:11px;
+  cursor:pointer;
+  color:#001018;
+}
+
+.copy.email{
+  background:linear-gradient(180deg,#0aa2d8,#077bb0);
+}
+
+.copy.pass{
+  background:linear-gradient(180deg,#2bffb6,#1ccf92);
+}
+
+.eye{
+  margin-top:6px;
+  font-size:13px;
+  color:#9edfff;
   cursor:pointer;
 }
 
@@ -118,6 +138,19 @@ body{
   font-size:12px;
   color:#9edfff;
 }
+
+/* TOAST */
+.toast{
+  position:absolute;
+  bottom:18px;left:50%;
+  transform:translateX(-50%);
+  background:#1ccf92;
+  color:#001018;
+  padding:8px 14px;
+  border-radius:12px;
+  font-weight:800;
+  display:none;
+}
 </style>
 </head>
 
@@ -132,39 +165,30 @@ body{
   <div class="brand">EliteHub</div>
   <div class="title">Secure Key Access</div>
 
-  <div class="status" id="statusText">
-    Generating secure access key…
-  </div>
-
-  <div class="timer" id="timerBox">
-    <span id="time">3</span>s
-  </div>
+  <div class="status" id="statusText">Generating secure access key…</div>
+  <div class="timer" id="timerBox"><span id="time">3</span>s</div>
 
   <div class="panel">
     <div class="label">EMAIL</div>
     <div class="value" id="email">—</div>
-    <button class="copy" onclick="copyText('email')">Copy Email</button>
+    <button class="copy email" onclick="copyText('email')">📧 Copy Email</button>
   </div>
 
   <div class="panel">
     <div class="label">PASSWORD</div>
-    <div class="value" id="password">—</div>
-    <button class="copy" onclick="copyText('password')">Copy Password</button>
+    <div class="value" id="password" data-hidden="true">—</div>
+    <div class="eye" onclick="togglePass()">👁 Show / Hide</div>
+    <button class="copy pass" onclick="copyText('password')">🔑 Copy Password</button>
 
-    <!-- 🔴 SINGLE WARNING -->
     <div class="warning">
       ⚠️ If you delete or uninstall this app, you will lose access permanently.
     </div>
   </div>
 
-  <div class="validity">
-    ⏳ Key valid for: 24 Hours
-  </div>
+  <div class="validity">⏳ Key valid for: 24 Hours</div>
+  <div class="trust">EliteHub Trusted Access • Secure • Verified</div>
 
-  <div class="trust">
-    EliteHub Trusted Access • Secure • Verified
-  </div>
-
+  <div class="toast" id="toast">✔ Copied</div>
 </div>
 
 <script>
@@ -181,45 +205,44 @@ const data=[
  {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-// ONE DEVICE – 24H SESSION
-const now = Date.now();
-const saved = JSON.parse(localStorage.getItem('elitehub_session') || '{}');
-
+const now=Date.now();
+const saved=JSON.parse(localStorage.getItem('elitehub_session')||'{}');
 let idx;
-if(!saved.time || now - saved.time > 86400000){
-  idx = Math.floor(Math.random()*data.length);
-  localStorage.setItem(
-    'elitehub_session',
-    JSON.stringify({idx,time:now})
-  );
-}else{
-  idx = saved.idx;
-}
 
-// FAST COUNTDOWN
-let t = 3;
-const timer = setInterval(()=>{
-  t--;
-  document.getElementById('time').textContent = t;
+if(!saved.time||now-saved.time>86400000){
+ idx=Math.floor(Math.random()*data.length);
+ localStorage.setItem('elitehub_session',JSON.stringify({idx,time:now}));
+}else idx=saved.idx;
 
-  if(t <= 0){
-    clearInterval(timer);
-
-    document.getElementById('email').textContent = data[idx].e;
-    document.getElementById('password').textContent = data[idx].p;
-
-    // HIDE LOADING TEXT
-    document.getElementById('statusText').style.display = 'none';
-    document.getElementById('timerBox').style.display = 'none';
-  }
+let t=3;
+const timer=setInterval(()=>{
+ t--;
+ document.getElementById('time').textContent=t;
+ if(t<=0){
+  clearInterval(timer);
+  document.getElementById('email').textContent=data[idx].e;
+  document.getElementById('password').textContent=data[idx].p;
+  document.getElementById('statusText').style.display='none';
+  document.getElementById('timerBox').style.display='none';
+ }
 },1000);
 
 function copyText(id){
-  navigator.clipboard.writeText(
-    document.getElementById(id).textContent
-  );
+ navigator.clipboard.writeText(document.getElementById(id).textContent);
+ const toast=document.getElementById('toast');
+ toast.style.display='block';
+ setTimeout(()=>toast.style.display='none',1200);
+}
+
+function togglePass(){
+ const p=document.getElementById('password');
+ if(p.dataset.hidden==='true'){
+  p.dataset.hidden='false';
+ }else{
+  p.dataset.hidden='true';
+ }
 }
 </script>
 
 </body>
-  </html>
+</html>
