@@ -1,100 +1,112 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EliteHub Secure Access</title>
+<title>EliteHub Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Cache off (same link pe hi fresh load) -->
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-<meta http-equiv="Pragma" content="no-cache"/>
-<meta http-equiv="Expires" content="0"/>
+<!-- Cache / Chase fix -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 
 <style>
 :root{
-  --bg1:#050b16; --bg2:#0b1a2e;
-  --neon:#2bf2ff; --neon2:#7cffc7;
-  --card:rgba(255,255,255,.08);
+  --bg:#050b16;
+  --card:#0c1f36cc;
+  --neon:#2bf2ff;
+  --green:#38ffb6;
 }
 *{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
+
 body{
-  margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; color:#eaf7ff;
+  margin:0;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
   background:
-    radial-gradient(900px circle at 15% 10%, #1ad1ff33, transparent 40%),
-    radial-gradient(900px circle at 85% 90%, #5cffb733, transparent 40%),
-    linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg1));
+    radial-gradient(circle at top,#1ad1ff33,transparent 45%),
+    radial-gradient(circle at bottom,#38ffb633,transparent 45%),
+    linear-gradient(135deg,#050b16,#071a2f,#050b16);
+  color:#eaf7ff;
 }
 
-/* Card */
 .card{
-  width:94%; max-width:420px; background:var(--card); backdrop-filter:blur(18px);
-  border-radius:26px; padding:26px 22px 28px; text-align:center;
-  box-shadow:0 40px 90px rgba(0,0,0,.65);
-  position:relative; overflow:hidden; animation:fade .9s ease;
+  width:94%;max-width:420px;
+  background:var(--card);
+  backdrop-filter:blur(18px);
+  border-radius:28px;
+  padding:26px 22px 30px;
+  text-align:center;
+  box-shadow:0 40px 90px rgba(0,0,0,.7);
+  position:relative;
 }
-@keyframes fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-/* Light ring */
-.card::before{
-  content:""; position:absolute; inset:-2px; border-radius:28px;
-  background:conic-gradient(from 0deg,#2bf2ff,#4f8cff,#7cffc7,#2bf2ff);
-  filter:blur(20px); opacity:.35; animation:spin 14s linear infinite; z-index:-1;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* Logo */
 .logo{
-  width:112px;height:112px;border-radius:50%;background:#000;margin:auto;overflow:hidden;
-  box-shadow:0 0 45px rgba(43,242,255,.85), inset 0 0 18px rgba(43,242,255,.35);
+  width:112px;height:112px;border-radius:50%;
+  margin:auto;background:#000;overflow:hidden;
+  box-shadow:0 0 45px rgba(43,242,255,.8);
 }
 .logo img{width:100%;height:100%;object-fit:cover}
 
-/* Text */
 h1{
-  margin:14px 0 4px;font-size:28px;letter-spacing:.4px;
+  margin:14px 0 4px;font-size:28px;
   text-shadow:0 0 18px rgba(43,242,255,.45);
 }
-.sub{font-size:14px;color:#a6e7ff;margin-bottom:10px}
+.sub{font-size:14px;color:#9edfff}
+
 .ready{
-  font-size:26px;font-weight:800;color:var(--neon2);
-  text-shadow:0 0 16px rgba(124,255,199,.6); margin-bottom:16px
+  margin:10px 0 6px;
+  font-size:26px;font-weight:800;
+  color:var(--green);
+  text-shadow:0 0 18px rgba(56,255,182,.6);
 }
 
-/* Panels */
+.countdown{
+  font-size:14px;color:#a6e7ff;margin-bottom:16px
+}
+
 .panel{
-  background:#06152c;border:1px solid #123c6b;border-radius:18px;padding:14px;margin-bottom:14px
-}
-.label{font-size:12px;color:#9fdcff;letter-spacing:.6px}
-.value{
-  font-size:15px;font-weight:700;margin-top:4px;word-break:break-all;
-  text-shadow:0 0 10px rgba(43,242,255,.25)
+  background:#06152c;
+  border:1px solid #123c6b;
+  border-radius:18px;
+  padding:14px;margin-bottom:14px;
 }
 
-/* Copy button */
+.label{font-size:12px;color:#9fdcff}
+.value{
+  margin-top:6px;
+  font-size:15px;font-weight:700;
+  word-break:break-all;
+  text-shadow:0 0 10px rgba(43,242,255,.25);
+}
+
 .copy{
-  margin-top:10px; width:100%; border-radius:12px; border:1px solid #1c7fb0;
-  background:linear-gradient(180deg,#0aa2d8,#077bb0); color:#001018;
-  font-weight:800; padding:10px; cursor:pointer;
+  margin-top:10px;width:100%;
+  border-radius:12px;border:1px solid #1c7fb0;
+  background:linear-gradient(180deg,#0aa2d8,#077bb0);
+  color:#001018;font-weight:800;
+  padding:10px;cursor:pointer;
   box-shadow:0 0 22px rgba(10,162,216,.45);
 }
-.copy:active{transform:scale(.98)}
 
-.note{margin-top:12px;font-size:12px;color:#9bbfe0}
-.footer{margin-top:16px;font-size:12px;color:#7fbbe6;opacity:.95}
+.note{
+  margin-top:12px;font-size:12px;color:#9bbfe0
+}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-  <!-- 🔴 EliteHub LOGO: yahan apna logo URL daalo -->
+  <!-- 🔴 EliteHub Logo -->
   <div class="logo">
-    <img src="LOGO_URL_HERE">
+    <img src="PASTE_YOUR_LOGO_URL_HERE">
   </div>
 
   <h1>EliteHub</h1>
-  <div class="sub">Secure Access Panel</div>
+  <div class="sub">Your Key Is Ready</div>
   <div class="ready">READY</div>
+  <div class="countdown">Access unlocks in <span id="time">20</span>s</div>
 
   <!-- EMAIL -->
   <div class="panel">
@@ -110,43 +122,50 @@ h1{
     <button class="copy" onclick="copyText('password')">Copy Password</button>
   </div>
 
-  <div class="note">One device = one Gmail • Stored locally on this browser</div>
-  <div class="footer">Professional demo UI • No redirects • No browser switch</div>
+  <div class="note">
+    One device = one key<br>
+    Stored locally • Do not share
+  </div>
 </div>
 
 <script>
-// ---------- One device = one Gmail ----------
-const accounts = [
-  {e:'Elite1@gmail.com', p:'Elite@123'},
-  {e:'Elite2@gmail.com', p:'Elite@234'},
-  {e:'Elite3@gmail.com', p:'Elite@345'},
-  {e:'Elite4@gmail.com', p:'Elite@456'},
-  {e:'Elite5@gmail.com', p:'Elite@567'},
-  {e:'Elite6@gmail.com', p:'Elite@678'},
-  {e:'Elite7@gmail.com', p:'Elite@789'},
-  {e:'Elite8@gmail.com', p:'Elite@890'},
-  {e:'Elite9@gmail.com', p:'Elite@901'},
-  {e:'Elite10@gmail.com', p:'Elite@012'}
+/* Accounts */
+const data = [
+ {e:'Elite1@gmail.com',p:'Elite@123'},
+ {e:'Elite2@gmail.com',p:'Elite@234'},
+ {e:'Elite3@gmail.com',p:'Elite@345'},
+ {e:'Elite4@gmail.com',p:'Elite@456'},
+ {e:'Elite5@gmail.com',p:'Elite@567'},
+ {e:'Elite6@gmail.com',p:'Elite@678'},
+ {e:'Elite7@gmail.com',p:'Elite@789'},
+ {e:'Elite8@gmail.com',p:'Elite@890'},
+ {e:'Elite9@gmail.com',p:'Elite@901'},
+ {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-let idx = localStorage.getItem('elitehub_idx');
-if(idx === null){
-  idx = Math.floor(Math.random()*accounts.length);
-  localStorage.setItem('elitehub_idx', idx);
+/* One device = one account */
+let idx = localStorage.getItem('elitehub_key');
+if(!idx){
+  idx = Math.floor(Math.random()*data.length);
+  localStorage.setItem('elitehub_key',idx);
 }
-const acc = accounts[idx];
-document.getElementById('email').textContent = acc.e;
-document.getElementById('password').textContent = acc.p;
 
-// Copy helper
+/* Countdown */
+let t = 20;
+const timer = setInterval(()=>{
+  t--;
+  document.getElementById('time').textContent = t;
+  if(t<=0){
+    clearInterval(timer);
+    document.getElementById('email').textContent = data[idx].e;
+    document.getElementById('password').textContent = data[idx].p;
+  }
+},1000);
+
+/* Copy */
 function copyText(id){
-  const t = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(t).then(()=>{
-    const btn = event.target;
-    const old = btn.textContent;
-    btn.textContent = '✓ Copied';
-    setTimeout(()=>btn.textContent = old, 1200);
-  });
+  const txt = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(txt);
 }
 </script>
 
