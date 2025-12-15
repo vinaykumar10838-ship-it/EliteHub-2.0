@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EliteHub Secure Access</title>
+<title>EliteHub – Secure Key Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Cache / Browser Chase Fix -->
+<!-- Cache Control -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -22,62 +22,58 @@
 body{
   margin:0;min-height:100vh;
   display:flex;align-items:center;justify-content:center;
-  background:
-    radial-gradient(circle at top,#1ad1ff33,transparent 45%),
-    radial-gradient(circle at bottom,#2bffb633,transparent 45%),
-    linear-gradient(135deg,#040b18,#071a2f,#040b18);
+  background:linear-gradient(135deg,#040b18,#071a2f,#040b18);
   color:#eaf7ff;
 }
 
 .card{
   width:94%;max-width:420px;
   background:var(--card);
-  backdrop-filter:blur(18px);
-  border-radius:32px;
+  backdrop-filter:blur(16px);
+  border-radius:30px;
   padding:26px 22px 30px;
   text-align:center;
-  box-shadow:0 40px 90px rgba(0,0,0,.7);
+  box-shadow:0 35px 80px rgba(0,0,0,.65);
 }
 
 .logo{
-  width:120px;height:120px;border-radius:50%;
+  width:115px;height:115px;border-radius:50%;
   margin:auto;background:#000;overflow:hidden;
-  box-shadow:0 0 55px rgba(43,242,255,.95);
+  box-shadow:0 0 50px rgba(43,242,255,.9);
 }
 .logo img{width:100%;height:100%;object-fit:cover}
 
-/* 🔥 EliteHub UNIQUE TEXT */
 .brand{
   margin-top:14px;
-  font-size:30px;
+  font-size:28px;
   font-weight:900;
   letter-spacing:1px;
-  text-shadow:
-    0 0 10px rgba(43,242,255,.6),
-    0 0 25px rgba(43,242,255,.8);
-}
-.brand::after{
-  content:"";
-  display:block;
-  width:70px;height:3px;
-  margin:8px auto 0;
-  background:linear-gradient(90deg,transparent,var(--neon),transparent);
-  box-shadow:0 0 12px var(--neon);
+  text-shadow:0 0 20px rgba(43,242,255,.75);
 }
 
-/* 🔐 Professional Timer Text */
-.secure-text{
-  margin:18px 0 6px;
+.title{
+  margin-top:6px;
   font-size:14px;
-  letter-spacing:.5px;
   color:#9edfff;
+}
+
+.status{
+  margin:18px 0 6px;
+  font-size:15px;
+  color:#c6f4ff;
+}
+
+.warning{
+  font-size:12px;
+  color:#89cfff;
+  margin-bottom:10px;
 }
 
 .timer{
   font-size:22px;
   font-weight:800;
   color:var(--green);
-  text-shadow:0 0 18px rgba(43,255,182,.85);
+  text-shadow:0 0 16px rgba(43,255,182,.8);
   margin-bottom:18px;
 }
 
@@ -93,7 +89,6 @@ body{
   margin-top:6px;
   font-size:15px;font-weight:700;
   word-break:break-all;
-  text-shadow:0 0 10px rgba(43,242,255,.3);
 }
 
 .copy{
@@ -101,15 +96,19 @@ body{
   border-radius:14px;border:none;
   background:linear-gradient(180deg,#0aa2d8,#077bb0);
   color:#001018;font-weight:800;
-  padding:12px;cursor:pointer;
-  box-shadow:0 0 25px rgba(10,162,216,.55);
+  padding:11px;cursor:pointer;
+}
+
+.validity{
+  margin-top:10px;
+  font-size:13px;
+  color:#9edfff;
 }
 
 .trust{
   margin-top:12px;
   font-size:12px;
   color:#9edfff;
-  text-shadow:0 0 14px rgba(43,242,255,.45);
 }
 </style>
 </head>
@@ -118,30 +117,33 @@ body{
 
 <div class="card">
 
-  <!-- LOGO -->
   <div class="logo">
     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg">
   </div>
 
-  <!-- BRAND -->
   <div class="brand">EliteHub</div>
+  <div class="title">Secure Key Access</div>
 
-  <!-- TIMER -->
-  <div class="secure-text">Secure session initializing…</div>
-  <div class="timer"><span id="time">5</span>s</div>
+  <div class="status">Generating secure access key…</div>
+  <div class="warning">Do not share this key with anyone</div>
 
-  <!-- EMAIL -->
+  <div class="timer"><span id="time">3</span>s</div>
+
   <div class="panel">
     <div class="label">EMAIL</div>
     <div class="value" id="email">—</div>
     <button class="copy" onclick="copyText('email')">Copy Email</button>
   </div>
 
-  <!-- PASSWORD -->
   <div class="panel">
     <div class="label">PASSWORD</div>
     <div class="value" id="password">—</div>
     <button class="copy" onclick="copyText('password')">Copy Password</button>
+  </div>
+
+  <div class="validity">
+    ⏳ KEY VALIDITY<br>
+    🕒 Key valid for: 24 Hours
   </div>
 
   <div class="trust">
@@ -151,7 +153,6 @@ body{
 </div>
 
 <script>
-// Demo credentials
 const data = [
  {e:'Elite1@gmail.com',p:'Elite@123'},
  {e:'Elite2@gmail.com',p:'Elite@234'},
@@ -165,15 +166,18 @@ const data = [
  {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-// One browser session = one account
-let idx = sessionStorage.getItem('elitehub_key');
-if(idx === null){
+const now = Date.now();
+const saved = JSON.parse(localStorage.getItem('elitehub_session') || '{}');
+
+let idx;
+if(!saved.time || now - saved.time > 86400000){
   idx = Math.floor(Math.random()*data.length);
-  sessionStorage.setItem('elitehub_key',idx);
+  localStorage.setItem('elitehub_session',JSON.stringify({idx,time:now}));
+}else{
+  idx = saved.idx;
 }
 
-// 5-second countdown
-let t = 5;
+let t = 3;
 const timer = setInterval(()=>{
   t--;
   document.getElementById('time').textContent = t;
@@ -184,11 +188,8 @@ const timer = setInterval(()=>{
   }
 },1000);
 
-// Copy
 function copyText(id){
-  navigator.clipboard.writeText(
-    document.getElementById(id).textContent
-  );
+  navigator.clipboard.writeText(document.getElementById(id).textContent);
 }
 </script>
 
