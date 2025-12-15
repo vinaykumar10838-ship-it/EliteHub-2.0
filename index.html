@@ -5,93 +5,89 @@
 <title>EliteHub Secure Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Cache off (same link pe hi fresh load) -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 
 <style>
+:root{
+  --bg1:#050b16; --bg2:#0b1a2e;
+  --neon:#2bf2ff; --neon2:#7cffc7;
+  --card:rgba(255,255,255,.08);
+}
 *{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
 body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; color:#eaf7ff;
   background:
-    radial-gradient(700px circle at 20% 10%, #00e5ff33, transparent 40%),
-    radial-gradient(700px circle at 80% 90%, #4f8cff33, transparent 40%),
-    linear-gradient(135deg,#050b16,#0b1a2e,#050b16);
-  color:#fff;
+    radial-gradient(900px circle at 15% 10%, #1ad1ff33, transparent 40%),
+    radial-gradient(900px circle at 85% 90%, #5cffb733, transparent 40%),
+    linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg1));
 }
 
+/* Card */
 .card{
-  width:92%;
-  max-width:400px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(16px);
-  border-radius:22px;
-  padding:26px 20px 28px;
-  text-align:center;
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
-  animation:fade 1s ease;
+  width:94%; max-width:420px; background:var(--card); backdrop-filter:blur(18px);
+  border-radius:26px; padding:26px 22px 28px; text-align:center;
+  box-shadow:0 40px 90px rgba(0,0,0,.65);
+  position:relative; overflow:hidden; animation:fade .9s ease;
 }
+@keyframes fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-@keyframes fade{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:none}
+/* Light ring */
+.card::before{
+  content:""; position:absolute; inset:-2px; border-radius:28px;
+  background:conic-gradient(from 0deg,#2bf2ff,#4f8cff,#7cffc7,#2bf2ff);
+  filter:blur(20px); opacity:.35; animation:spin 14s linear infinite; z-index:-1;
 }
+@keyframes spin{to{transform:rotate(360deg)}}
 
+/* Logo */
 .logo{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  background:#000;
-  box-shadow:0 0 40px #19c6ff;
-  margin:auto;
-  overflow:hidden;
+  width:112px;height:112px;border-radius:50%;background:#000;margin:auto;overflow:hidden;
+  box-shadow:0 0 45px rgba(43,242,255,.85), inset 0 0 18px rgba(43,242,255,.35);
 }
-.logo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.logo img{width:100%;height:100%;object-fit:cover}
+
+/* Text */
+h1{
+  margin:14px 0 4px;font-size:28px;letter-spacing:.4px;
+  text-shadow:0 0 18px rgba(43,242,255,.45);
 }
-
-h1{margin:14px 0 4px;font-size:28px}
-.sub{font-size:14px;color:#9fdcff;margin-bottom:14px}
-.ready{font-size:26px;font-weight:800;color:#1cffbf;margin-bottom:16px}
-
-.list{
-  max-height:360px;
-  overflow:auto;
-  padding-right:4px;
+.sub{font-size:14px;color:#a6e7ff;margin-bottom:10px}
+.ready{
+  font-size:26px;font-weight:800;color:var(--neon2);
+  text-shadow:0 0 16px rgba(124,255,199,.6); margin-bottom:16px
 }
 
-.item{
-  background:#020d1f;
-  border:1px solid #155a88;
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:12px;
-  text-align:left;
+/* Panels */
+.panel{
+  background:#06152c;border:1px solid #123c6b;border-radius:18px;padding:14px;margin-bottom:14px
+}
+.label{font-size:12px;color:#9fdcff;letter-spacing:.6px}
+.value{
+  font-size:15px;font-weight:700;margin-top:4px;word-break:break-all;
+  text-shadow:0 0 10px rgba(43,242,255,.25)
 }
 
-.email{font-size:14px;font-weight:600;color:#e9f6ff}
-.pass{font-size:13px;color:#7fe1ff;margin-top:4px}
-
-.footer{
-  margin-top:16px;
-  font-size:12px;
-  color:#7fbbe6;
-  opacity:.9;
+/* Copy button */
+.copy{
+  margin-top:10px; width:100%; border-radius:12px; border:1px solid #1c7fb0;
+  background:linear-gradient(180deg,#0aa2d8,#077bb0); color:#001018;
+  font-weight:800; padding:10px; cursor:pointer;
+  box-shadow:0 0 22px rgba(10,162,216,.45);
 }
+.copy:active{transform:scale(.98)}
+
+.note{margin-top:12px;font-size:12px;color:#9bbfe0}
+.footer{margin-top:16px;font-size:12px;color:#7fbbe6;opacity:.95}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-
-  <!-- 🔵 LOGO -->
+  <!-- 🔴 EliteHub LOGO: yahan apna logo URL daalo -->
   <div class="logo">
     <img src="LOGO_URL_HERE">
   </div>
@@ -100,65 +96,59 @@ h1{margin:14px 0 4px;font-size:28px}
   <div class="sub">Secure Access Panel</div>
   <div class="ready">READY</div>
 
-  <div class="list">
-
-    <div class="item">
-      <div class="email">Elite1@gmail.com</div>
-      <div class="pass">Password: Elite@123</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite2@gmail.com</div>
-      <div class="pass">Password: Elite@234</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite3@gmail.com</div>
-      <div class="pass">Password: Elite@345</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite4@gmail.com</div>
-      <div class="pass">Password: Elite@456</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite5@gmail.com</div>
-      <div class="pass">Password: Elite@567</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite6@gmail.com</div>
-      <div class="pass">Password: Elite@678</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite7@gmail.com</div>
-      <div class="pass">Password: Elite@789</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite8@gmail.com</div>
-      <div class="pass">Password: Elite@890</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite9@gmail.com</div>
-      <div class="pass">Password: Elite@901</div>
-    </div>
-
-    <div class="item">
-      <div class="email">Elite10@gmail.com</div>
-      <div class="pass">Password: Elite@012</div>
-    </div>
-
+  <!-- EMAIL -->
+  <div class="panel">
+    <div class="label">EMAIL</div>
+    <div class="value" id="email">—</div>
+    <button class="copy" onclick="copyText('email')">Copy Email</button>
   </div>
 
-  <div class="footer">
-    Demo access list • For presentation / UI purpose only
+  <!-- PASSWORD -->
+  <div class="panel">
+    <div class="label">PASSWORD</div>
+    <div class="value" id="password">—</div>
+    <button class="copy" onclick="copyText('password')">Copy Password</button>
   </div>
 
+  <div class="note">One device = one Gmail • Stored locally on this browser</div>
+  <div class="footer">Professional demo UI • No redirects • No browser switch</div>
 </div>
 
+<script>
+// ---------- One device = one Gmail ----------
+const accounts = [
+  {e:'Elite1@gmail.com', p:'Elite@123'},
+  {e:'Elite2@gmail.com', p:'Elite@234'},
+  {e:'Elite3@gmail.com', p:'Elite@345'},
+  {e:'Elite4@gmail.com', p:'Elite@456'},
+  {e:'Elite5@gmail.com', p:'Elite@567'},
+  {e:'Elite6@gmail.com', p:'Elite@678'},
+  {e:'Elite7@gmail.com', p:'Elite@789'},
+  {e:'Elite8@gmail.com', p:'Elite@890'},
+  {e:'Elite9@gmail.com', p:'Elite@901'},
+  {e:'Elite10@gmail.com', p:'Elite@012'}
+];
+
+let idx = localStorage.getItem('elitehub_idx');
+if(idx === null){
+  idx = Math.floor(Math.random()*accounts.length);
+  localStorage.setItem('elitehub_idx', idx);
+}
+const acc = accounts[idx];
+document.getElementById('email').textContent = acc.e;
+document.getElementById('password').textContent = acc.p;
+
+// Copy helper
+function copyText(id){
+  const t = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(t).then(()=>{
+    const btn = event.target;
+    const old = btn.textContent;
+    btn.textContent = '✓ Copied';
+    setTimeout(()=>btn.textContent = old, 1200);
+  });
+}
+</script>
+
 </body>
-                                           </html>
+</html>
