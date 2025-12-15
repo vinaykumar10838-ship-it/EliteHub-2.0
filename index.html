@@ -5,14 +5,12 @@
 <title>EliteHub Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 🔁 STRONG CACHE / CHASE FIX -->
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<!-- Cache control (safe, no loop) -->
+<meta http-equiv="Cache-Control" content="no-store">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 
 <style>
 :root{
-  --bg:#050b16;
   --card:#0c1f36cc;
   --neon:#2bf2ff;
   --green:#38ffb6;
@@ -29,7 +27,6 @@ body{
   color:#eaf7ff;
 }
 
-/* CARD */
 .card{
   width:94%;max-width:420px;
   background:var(--card);
@@ -38,10 +35,8 @@ body{
   padding:26px 22px 30px;
   text-align:center;
   box-shadow:0 40px 90px rgba(0,0,0,.7);
-  position:relative;
 }
 
-/* LOGO – background-image (100% reliable) */
 .logo{
   width:112px;height:112px;border-radius:50%;
   margin:auto;
@@ -51,12 +46,12 @@ body{
   box-shadow:0 0 45px rgba(43,242,255,.85);
 }
 
-/* TEXT */
 h1{
   margin:14px 0 4px;font-size:28px;
   text-shadow:0 0 18px rgba(43,242,255,.45);
 }
 .sub{font-size:14px;color:#9edfff}
+
 .ready{
   margin:10px 0 6px;
   font-size:26px;font-weight:800;
@@ -67,13 +62,13 @@ h1{
   font-size:14px;color:#a6e7ff;margin-bottom:16px
 }
 
-/* PANELS */
 .panel{
   background:#06152c;
   border:1px solid #123c6b;
   border-radius:18px;
   padding:14px;margin-bottom:14px;
 }
+
 .label{font-size:12px;color:#9fdcff}
 .value{
   margin-top:6px;
@@ -82,7 +77,6 @@ h1{
   text-shadow:0 0 10px rgba(43,242,255,.25);
 }
 
-/* COPY BUTTON */
 .copy{
   margin-top:10px;width:100%;
   border-radius:12px;border:1px solid #1c7fb0;
@@ -93,17 +87,12 @@ h1{
 }
 
 .note{
-  margin-top:12px;font-size:12px;color:#9bbfe0
+  margin-top:14px;
+  font-size:12px;
+  color:#b6dbff;
+  line-height:1.5;
 }
 </style>
-
-<!-- 🔥 HARD CHASE BREAKER (same link, force fresh) -->
-<script>
-const VERSION="vFINAL_1";
-if(!location.search.includes(VERSION)){
-  location.replace(location.pathname + "?" + VERSION);
-}
-</script>
 </head>
 
 <body>
@@ -114,7 +103,7 @@ if(!location.search.includes(VERSION)){
   <h1>EliteHub</h1>
   <div class="sub">Your Key Is Ready</div>
   <div class="ready">READY</div>
-  <div class="countdown">Access unlocks in <span id="time">20</span>s</div>
+  <div class="countdown" id="cd">Access unlocks in <span id="time">3</span>s</div>
 
   <div class="panel">
     <div class="label">EMAIL</div>
@@ -129,13 +118,13 @@ if(!location.search.includes(VERSION)){
   </div>
 
   <div class="note">
-    One device = one key<br>
-    Stored locally • Do not share
+    EliteHub Secure Distribution System<br>
+    Verified • Encrypted • Trusted Access
   </div>
 </div>
 
 <script>
-/* 🔐 EMAIL–PASSWORD LIST */
+/* DATA */
 const data=[
  {e:'Elite1@gmail.com',p:'Elite@123'},
  {e:'Elite2@gmail.com',p:'Elite@234'},
@@ -149,26 +138,38 @@ const data=[
  {e:'Elite10@gmail.com',p:'Elite@012'}
 ];
 
-/* ONE DEVICE = ONE ACCOUNT */
-let idx=localStorage.getItem("elitehub_key");
-if(idx===null){
-  idx=Math.floor(Math.random()*data.length);
-  localStorage.setItem("elitehub_key",idx);
+/* DEVICE KEY */
+let idx = localStorage.getItem("elitehub_key");
+if(idx === null){
+  idx = Math.floor(Math.random()*data.length);
+  localStorage.setItem("elitehub_key", idx);
 }
 
-/* COUNTDOWN */
-let t=20;
-const timer=setInterval(()=>{
-  t--;
-  document.getElementById("time").textContent=t;
-  if(t<=0){
-    clearInterval(timer);
-    document.getElementById("email").textContent=data[idx].e;
-    document.getElementById("password").textContent=data[idx].p;
-  }
-},1000);
+/* FIRST VISIT CHECK */
+let unlocked = localStorage.getItem("elitehub_unlocked");
 
-/* COPY */
+if(unlocked){
+  showData();
+  document.getElementById("cd").style.display="none";
+}else{
+  let t = 3;
+  const timer = setInterval(()=>{
+    t--;
+    document.getElementById("time").textContent=t;
+    if(t<=0){
+      clearInterval(timer);
+      localStorage.setItem("elitehub_unlocked","1");
+      showData();
+      document.getElementById("cd").style.display="none";
+    }
+  },1000);
+}
+
+function showData(){
+  document.getElementById("email").textContent = data[idx].e;
+  document.getElementById("password").textContent = data[idx].p;
+}
+
 function copyText(id){
   navigator.clipboard.writeText(
     document.getElementById(id).textContent
