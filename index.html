@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EliteHub – Secure Key Access</title>
+<title>EliteHub – Contact Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -13,13 +13,11 @@
 :root{
   --elite:#00E676;
   --hub:#00BFA5;
-  --text:#E0E0E0;
   --bg:#040b18;
   --card:#0b203b;
-  --blue:#19b9ff;
+  --text:#E0E0E0;
   --red:#FF5252;
-  --yellow:#FFC107;
-  --grey:#9E9E9E;
+  --price:#19b9ff;
 }
 *{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
 
@@ -61,17 +59,10 @@ body{
 }
 
 .status{
-  margin:18px 0 6px;
+  margin:18px 0 12px;
   font-size:15px;
-  font-weight:700;
-  color:var(--text);
-}
-
-.startTimer{
-  font-size:22px;
-  font-weight:900;
-  color:var(--elite);
-  margin-bottom:16px;
+  font-weight:800;
+  color:var(--red);
 }
 
 .panel{
@@ -83,40 +74,53 @@ body{
 }
 
 .label{font-size:12px;color:#9fdcff}
-.value{margin-top:6px;font-size:16px;font-weight:700}
+.value{
+  margin-top:6px;
+  font-size:18px;
+  font-weight:900;
+  color:var(--elite);
+}
 
-.btn{
-  margin-top:12px;
+.copyBtn{
+  margin-top:14px;
   width:100%;
-  border-radius:14px;
+  padding:14px;
   border:none;
-  padding:12px;
-  font-size:15px;
-  font-weight:800;
+  border-radius:16px;
+  background:linear-gradient(180deg,#00E676,#00BFA5);
+  color:#002018;
+  font-size:16px;
+  font-weight:900;
   cursor:pointer;
 }
-.btn:disabled{opacity:.4;cursor:not-allowed}
 
-.btn-email{
-  background:linear-gradient(180deg,#1bbcff,#0d8fcf);
-  color:#001018;
+/* PRICING */
+.pricing{
+  background:#071c33;
+  border:1px solid #124a7a;
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:18px;
 }
-.btn-pass{
-  background:linear-gradient(180deg,#44ffb8,#1fd79a);
-  color:#002018;
-}
-
-.warning{
-  margin-top:12px;
-  font-size:13px;
+.plan{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#06152c;
+  margin-bottom:8px;
+  font-size:14px;
   font-weight:700;
-  color:var(--red);
+}
+.plan span.price{
+  color:var(--price);
+  font-weight:900;
 }
 
-.timer{
-  margin-top:10px;
+.instruction{
+  margin-top:14px;
   font-size:13px;
-  font-weight:700;
+  color:#9edfff;
 }
 
 .footer{
@@ -154,120 +158,58 @@ body{
   <div class="brand">
     <span class="elite">Elite</span><span class="hub">Hub</span>
   </div>
-  <div class="subtitle">Secure Key Access</div>
+  <div class="subtitle">Official Contact Access</div>
 
-  <!-- STATUS -->
-  <div class="status" id="statusText">
-    Initializing secure session…
-  </div>
-  <div class="startTimer" id="startTimer">3s</div>
+  <div class="status">🚫 Free trial has ended</div>
 
-  <!-- EMAIL -->
+  <!-- USERNAME -->
   <div class="panel">
-    <div class="label">EMAIL</div>
-    <div class="value" id="email">—</div>
-    <button class="btn btn-email" id="copyEmail" disabled onclick="copyText('email')">
-      📧 Copy Email
-    </button>
+    <div class="label">TELEGRAM USERNAME</div>
+    <div class="value" id="tgUser">@EliteExclusiveX</div>
   </div>
 
-  <!-- PASSWORD -->
-  <div class="panel">
-    <div class="label">PASSWORD</div>
-    <div class="value" id="password">—</div>
-    <button class="btn btn-pass" id="copyPass" disabled onclick="copyText('password')">
-      🔑 Copy Password
-    </button>
+  <!-- PRICING -->
+  <div class="pricing">
+    <div class="label">SUBSCRIPTION PLANS</div>
 
-    <div class="warning">
-      ⚠️ If you delete or uninstall this app, you will lose access permanently.
+    <div class="plan">
+      <span>Weekly Access</span>
+      <span class="price">₹49</span>
+    </div>
+
+    <div class="plan">
+      <span>Monthly Access</span>
+      <span class="price">₹99</span>
+    </div>
+
+    <div class="plan">
+      <span>Lifetime Access</span>
+      <span class="price">₹199</span>
     </div>
   </div>
 
-  <div class="timer">
-    <span id="timerText"></span>
+  <button class="copyBtn" onclick="copyUsername()">
+    📋 Copy Telegram Username
+  </button>
+
+  <div class="instruction">
+    Open Telegram → Search → Paste username → Send message
   </div>
 
   <div class="footer">
-    EliteHub Trusted Access • Secure • Verified
+    EliteHub Official • Secure • Verified
   </div>
 </div>
 
-<div class="toast" id="toast">✔ Copied</div>
+<div class="toast" id="toast">✔ Username Copied</div>
 
 <script>
-const data=[
- {e:'Elite1@gmail.com',p:'Elite@123'},
- {e:'Elite2@gmail.com',p:'Elite@234'},
- {e:'Elite3@gmail.com',p:'Elite@345'},
- {e:'Elite4@gmail.com',p:'Elite@456'},
- {e:'Elite5@gmail.com',p:'Elite@567'},
- {e:'Elite6@gmail.com',p:'Elite@678'},
- {e:'Elite7@gmail.com',p:'Elite@789'},
- {e:'Elite8@gmail.com',p:'Elite@890'},
- {e:'Elite9@gmail.com',p:'Elite@901'},
- {e:'Elite10@gmail.com',p:'Elite@012'}
-];
-
-let start=3;
-const startInt=setInterval(()=>{
-  start--;
-  document.getElementById('startTimer').textContent=start+'s';
-  if(start===0){
-    clearInterval(startInt);
-    document.getElementById('startTimer').style.display='none';
-    activateSession();
-  }
-},1000);
-
-function activateSession(){
-  const now=Date.now();
-  let s=JSON.parse(localStorage.getItem('elitehub_session')||'{}');
-  let idx,expire;
-
-  if(!s.expire||now>s.expire){
-    idx=Math.floor(Math.random()*data.length);
-    expire=now+24*60*60*1000;
-    localStorage.setItem('elitehub_session',JSON.stringify({idx,expire}));
-  }else{
-    idx=s.idx; expire=s.expire;
-  }
-
-  email.textContent=data[idx].e;
-  password.textContent=data[idx].p;
-
-  copyEmail.disabled=false;
-  copyPass.disabled=false;
-
-  statusText.innerHTML='🔐 <span style="color:#00E676">Elite</span> <span style="color:#00BFA5">Hub</span> Access Key Active';
-
-  setInterval(()=>{
-    const left=expire-Date.now();
-    const t=document.getElementById('timerText');
-
-    if(left<=0){
-      t.textContent='⛔ Access expired';
-      t.style.color='#9E9E9E';
-      return;
-    }
-
-    const h=Math.floor(left/3600000);
-    const m=Math.floor(left%3600000/60000);
-    const s=Math.floor(left%60000/1000);
-
-    t.textContent=`⏳ Access valid for ${h}h ${m}m ${s}s`;
-
-    if(left<30*60*1000) t.style.color='#FF5252';
-    else if(left<6*60*60*1000) t.style.color='#FFC107';
-    else t.style.color='#00E676';
-  },1000);
-}
-
-function copyText(id){
-  navigator.clipboard.writeText(document.getElementById(id).textContent);
-  const toast=document.getElementById('toast');
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'),1200);
+function copyUsername(){
+  const txt = document.getElementById('tgUser').textContent;
+  navigator.clipboard.writeText(txt);
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1200);
 }
 </script>
 
