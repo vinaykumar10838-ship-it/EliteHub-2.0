@@ -14,8 +14,8 @@
 :root{
   --green:#00E676;
   --green-dark:#00C853;
-  --bg:#0b1f18;
-  --card:#102a22;
+  --bg:#081612;
+  --card:#0f2a22;
   --text:#e8fff4;
   --muted:#7ed9b2;
 }
@@ -28,7 +28,7 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#081612;
+  background:var(--bg);
   color:var(--text);
 }
 
@@ -37,16 +37,16 @@ body{
   max-width:420px;
   background:linear-gradient(180deg,#0b1f18,#081612);
   border-radius:22px;
-  padding:24px;
+  padding:22px;
   text-align:center;
   box-shadow:0 20px 50px rgba(0,0,0,.6);
 }
 
 /* LOGO */
 .logo{
-  width:110px;
-  height:110px;
-  margin:0 auto 8px;
+  width:105px;
+  height:105px;
+  margin:0 auto 6px;
   border-radius:50%;
   overflow:hidden;
 }
@@ -57,7 +57,7 @@ body{
 }
 
 h1{
-  margin:8px 0 6px;
+  margin:8px 0 4px;
   font-size:30px;
   font-weight:800;
   color:var(--green);
@@ -69,16 +69,77 @@ h1{
   margin-bottom:14px;
 }
 
+/* QR */
+.qr-box{
+  background:#0e2a21;
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:14px;
+}
+
+.qr-box img{
+  width:100%;
+  max-width:260px;
+  border-radius:12px;
+}
+
+.scan-text{
+  margin-top:8px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* UPI ROW */
+.upi-row{
+  margin-top:6px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+}
+
+.upi-text{
+  color:#9fffd6;
+  font-weight:600;
+}
+
+.upi-copy{
+  position:relative;
+  color:var(--green);
+  font-weight:700;
+  cursor:pointer;
+}
+
+.copy-badge{
+  position:absolute;
+  top:-18px;
+  right:0;
+  font-size:11px;
+  padding:3px 8px;
+  border-radius:10px;
+  background:rgba(0,230,118,.25);
+  color:var(--green);
+  opacity:0;
+  transform:translateY(4px);
+  transition:.25s ease;
+}
+
+.copy-badge.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
 /* PLANS */
 .plan{
   display:flex;
   justify-content:space-between;
   align-items:center;
   background:#0e2a21;
-  border-radius:16px;
-  padding:14px 16px;
-  margin-bottom:10px;
-  font-size:16px;
+  border-radius:14px;
+  padding:12px 14px;
+  margin-bottom:8px;
+  font-size:15px;
   font-weight:700;
   border:2px solid transparent;
   cursor:pointer;
@@ -90,65 +151,38 @@ h1{
 
 .badge{
   font-size:11px;
-  padding:4px 8px;
+  padding:3px 8px;
   border-radius:10px;
   margin-left:6px;
   background:rgba(0,230,118,.15);
   color:var(--green);
-  font-weight:700;
 }
 
 /* PAY BUTTON */
 .pay-btn{
   width:100%;
-  margin-top:12px;
-  padding:16px;
+  margin-top:10px;
+  padding:15px;
   border:none;
   border-radius:18px;
   font-size:18px;
   font-weight:800;
-  cursor:pointer;
   background:linear-gradient(135deg,var(--green),var(--green-dark));
   color:#003820;
 }
 
-/* INFO */
 .info{
-  margin-top:10px;
+  margin-top:8px;
   font-size:13px;
   color:var(--muted);
 }
 
-/* TELEGRAM */
-.tg{
-  margin-top:14px;
-  font-size:16px;
-  font-weight:800;
+.support{
+  margin-top:10px;
+  font-size:15px;
   color:var(--green);
-  cursor:pointer;
+  font-weight:700;
 }
-
-.footer{
-  margin-top:6px;
-  font-size:12px;
-  color:#6bbf9b;
-}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#000;
-  color:var(--green);
-  padding:10px 18px;
-  border-radius:20px;
-  font-size:14px;
-  opacity:0;
-  transition:.3s;
-}
-.toast.show{opacity:1}
 </style>
 </head>
 
@@ -156,7 +190,6 @@ h1{
 
 <div class="card">
 
-  <!-- LOGO -->
   <div class="logo">
     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjiSV-yt9bS0j-MDgTlHPrD8g5U7Bz2pbOCRKrA-cw6ydBD10TNn91U3QU6tjfrA1QFf6DCGbqpV-K_vZEOn9qO-EtGkL7fp6HfR1Op5mrpX3QdgKABcK2jtS8UgaMTkvyErN3kbY2INT1DN3NT0Q7nBWGPfrdP0hTV6PV0KhYtDRU9-yMX9ufKtOc_hs/s640/85938.jpg">
   </div>
@@ -164,64 +197,74 @@ h1{
   <h1>EliteHub</h1>
   <div class="trust">⭐ Trusted by 1,000+ users</div>
 
+  <!-- QR -->
+  <div class="qr-box">
+    <img id="qrImg" src="" alt="UPI QR">
+    <div class="scan-text" id="scanText">Scan to pay ₹1</div>
+
+    <div class="upi-row">
+      <span class="upi-text">Q919329672@ybl</span>
+      <span class="upi-copy" onclick="copyUPI()">
+        📋 Copy
+        <span class="copy-badge" id="upiBadge">Copied</span>
+      </span>
+    </div>
+  </div>
+
   <!-- PLANS -->
-  <div class="plan active" data-amount="1">
+  <div class="plan active" data-amt="1">
     <div>1-Day Trial <span class="badge">LIMITED</span></div>
     <div>₹1</div>
   </div>
 
-  <div class="plan" data-amount="99">
-    <div>Monthly <span class="badge">MOST POPULAR</span></div>
+  <div class="plan" data-amt="99">
+    <div>Monthly <span class="badge">POPULAR</span></div>
     <div>₹99</div>
   </div>
 
-  <div class="plan" data-amount="199">
-    <div>Lifetime <span class="badge">BEST VALUE</span></div>
+  <div class="plan" data-amt="199">
+    <div>Lifetime <span class="badge">BEST</span></div>
     <div>₹199</div>
   </div>
 
-  <!-- PAY -->
-  <button class="pay-btn" id="payBtn">Pay ₹1 Securely</button>
-
+  <button class="pay-btn">Scan & Pay via UPI</button>
   <div class="info">🔒 Instant Access After Payment</div>
 
-  <!-- TELEGRAM -->
-  <div class="tg" onclick="copyTG()">@EliteExclusiveX</div>
-  <div class="footer">EliteHub Official • Secure Payment • One-time payment</div>
-
+  <div class="support">@EliteExclusiveX</div>
 </div>
 
-<div class="toast" id="toast">✔ Username Copied</div>
-
 <script>
-const UPI_ID = "Mswp.2520100425652180@axisbank";
-const TG_USERNAME = "@EliteExclusiveX";
+const UPI = "Q919329672@ybl";
+const qrImg = document.getElementById("qrImg");
+const scanText = document.getElementById("scanText");
+const plans = document.querySelectorAll(".plan");
 
-let amount = 1;
-const plans = document.querySelectorAll('.plan');
-const payBtn = document.getElementById('payBtn');
+function updateQR(amount){
+  const upiString = `upi://pay?pa=${UPI}&pn=EliteHub&am=${amount}&cu=INR`;
+  qrImg.src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
+    encodeURIComponent(upiString);
+  scanText.textContent = `Scan to pay ₹${amount}`;
+}
 
 plans.forEach(p=>{
   p.onclick=()=>{
-    plans.forEach(x=>x.classList.remove('active'));
-    p.classList.add('active');
-    amount=p.dataset.amount;
-    payBtn.textContent=`Pay ₹${amount} Securely`;
+    plans.forEach(x=>x.classList.remove("active"));
+    p.classList.add("active");
+    updateQR(p.dataset.amt);
   }
 });
 
-payBtn.onclick=()=>{
-  const link=`upi://pay?pa=${UPI_ID}&pn=EliteHub&am=${amount}&cu=INR`;
-  location.href=link;
+function copyUPI(){
+  navigator.clipboard.writeText(UPI);
+  const badge=document.getElementById("upiBadge");
+  badge.classList.add("show");
+  setTimeout(()=>badge.classList.remove("show"),1200);
 }
 
-function copyTG(){
-  navigator.clipboard.writeText(TG_USERNAME);
-  const t=document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),1200);
-}
+/* init */
+updateQR(1);
 </script>
 
 </body>
-  </html>
+</html>
